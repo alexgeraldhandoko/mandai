@@ -9,7 +9,6 @@ import {
   responseLengthOptions,
   speechRateOptions,
   useSettings,
-  type AppSettings,
 } from '@/context/settings-context';
 import { colors, radii, spacing } from '@/theme';
 

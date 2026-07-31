@@ -1,17 +1,31 @@
-# Environment files
+# Environment variables and local secrets
 .env
 .env.*
 !.env.example
 !**/.env.example
 
-# Dependencies and generated output
+# Dependencies and package-manager caches
 node_modules/
+.npm/
+.pnpm-store/
+.yarn/cache/
+.yarn/install-state.gz
+
+# Build, test, and compiler output
 dist/
+build/
 coverage/
 .expo/
 web-build/
-*.log
+*.lcov
 *.tsbuildinfo
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
 
 # Signing credentials
 *.jks
@@ -26,8 +40,16 @@ web-build/
 google-services.json
 GoogleService-Info.plist
 
-# Local tooling
+# Operating-system and editor files
 .DS_Store
+Thumbs.db
+.idea/
+*.swp
+*.swo
+*.orig
+*.orig.*
+
+# Machine-local assistant configuration
 .claude/
 .codex/
 .agents/
