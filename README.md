@@ -47,21 +47,32 @@ Visitors select a profile on entry that tailors all narration to their level:
 
 ### 2. Scan & Discover (Animal Recognition)
 
-- Point the camera at an animal → AI identifies the species
-- Unlocks a profile card with:
+- Point the camera at any animal → AI identifies the species in real-time
+- A popup card appears showing:
+  - Animal name and species
   - Fun facts tailored to the visitor's age profile
-  - The animal's name, personality, and keeper stories (personal connection)
-  - Conservation status and threats
-- Encourages guests to observe animals closely before scanning
+  - The animal's personality and keeper stories (personal connection)
+  - Conservation status, threats, and habitat info
+  - A short audio narration auto-plays alongside the card
+- Each scanned animal is saved to the visitor's personal "Field Journal"
+- Encourages guests to observe animals closely — the scan requires a steady focus on the animal
 
-### 3. Quest Trails with Badges (Pokemon Go-style)
+### 3. Species Collection Badges
 
-- Visitors follow themed trails through the park (e.g., "Rainforest Guardians", "Predator Patrol")
-- At each exhibit, they complete a challenge:
-  - Observe a specific behaviour ("Can you spot the orangutan using a tool?")
-  - Answer a quiz question from the audio narration
-  - Scan the animal successfully
-- Earn badges for each completed stop; bonus badges for finishing an entire trail
+- Visitors earn badges by scanning multiple animals from the same or related species groups
+- Example badge collections:
+
+| Badge | Requirement | Example |
+|-------|-------------|---------|
+| Bird Watcher | Scan 5 different bird species | Hornbill, Pelican, Flamingo, Macaw, Penguin |
+| Reptile Ranger | Scan 4 different reptile species | Gharial, Komodo Dragon, Tortoise, Crocodile |
+| Primate Pro | Scan 3 different primate species | Orangutan, Gibbon, Mandrill |
+| Big Cat Tracker | Scan 3 different big cat species | Tiger, Lion, Cheetah |
+| Ultimate Explorer | Complete all badge collections | All of the above |
+
+- Badge progress is visible in-app — shows which species you've found and which are still missing
+- Motivates visitors to explore more of the park to complete collections
+- Bonus: rare "behaviour badges" for scanning an animal doing something specific (e.g., "Toolmaker" — scan an orangutan using a stick)
 - Leaderboard for friendly competition among families
 
 ### 4. RFID/NFC Tap Points with AR Animations
@@ -81,9 +92,9 @@ Visitors select a profile on entry that tailors all narration to their level:
 | Criterion | How Our App Delivers |
 |-----------|---------------------|
 | Adapts to age/interest/learning style | Profile selection tailors narration complexity and content |
-| Encourages deeper observation | Scan challenges require looking at animals; quest prompts direct attention to behaviours |
+| Encourages deeper observation | Scanning requires focusing on the animal; collecting species badges motivates visiting more exhibits |
 | Enhances conservation understanding | Every encounter ends with a bite-sized conservation fact + actionable CTA |
-| Creates memorable experience | Badges, trails, AR animations, and a personalised post-visit report |
+| Creates memorable experience | Species collection badges, AR animations, Field Journal, and a personalised post-visit report |
 
 ---
 
@@ -105,14 +116,14 @@ Visitors select a profile on entry that tailors all narration to their level:
 ## User Flow
 
 ```
-Entry → Select Profile (age/accessibility) 
-  → Choose a Quest Trail (themed path)
-    → Approach Exhibit → Audio narration auto-plays
-      → Tap NFC point → Watch AR animation
-      → Scan animal with camera → Unlock badge + facts
-        → Complete challenge → Earn badge
-          → Move to next exhibit...
-Exit → Receive "My Safari Report" (animals seen, badges, conservation pledge)
+Entry → Select Profile (age/accessibility)
+  → Approach Exhibit → Audio narration auto-plays
+    → Scan animal with camera → Popup shows species info card
+      → Animal saved to Field Journal
+      → Check: does this complete a species collection? → Earn badge!
+    → Tap NFC point → Watch AR animation
+      → Move to next exhibit...
+Exit → Receive "My Safari Report" (animals scanned, badges earned, conservation pledge)
 ```
 
 ---
