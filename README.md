@@ -9,4 +9,5 @@ How might you use KIRO to create a personalised, AI_powered experience at a zoo 
 **Brainstorming of solutions**
 - new mobile app which serves as an audio guide to visitors, including those with visual impairment
 - visitors can tailor the complexity of their audio guide based on their age.
-- visitors can scan animals and attain badges upon scanning some animals
+- visitors can scan animals and have to follow a specific path to attain badges, similar to Pokemon Go.
+- rfid that visitors can scan so they can view animations of the animal which encapsulate the information of the exhibits. 
