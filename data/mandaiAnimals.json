@@ -1,0 +1,118 @@
+[
+  {
+    "id": "asian-elephant",
+    "name": "Asian elephant",
+    "species": "Elephas maximus",
+    "exhibit": "Elephants of Asia, Singapore Zoo",
+    "distinguishingTraits": [
+      "Smaller, more rounded ears than an African elephant",
+      "A domed head with two prominent bumps",
+      "A long, muscular trunk used for breathing, smelling, touching and grasping"
+    ],
+    "typicalBehaviour": [
+      "Uses its trunk to gather grass, leaves and other food",
+      "Bathes or sprays water and dust to cool and protect its skin",
+      "Lives in social family groups led by experienced females"
+    ],
+    "conservationStatus": "Endangered",
+    "safeVisitorFacts": [
+      "The Singapore Zoo herd at Elephants of Asia is all female.",
+      "Mud and dust help protect elephant skin from sun and insects.",
+      "Watch quietly from the visitor area and follow keeper instructions during feeding sessions."
+    ],
+    "source": "https://www.mandai.com/en/singapore-zoo/animals-and-zones/elephants-of-asia.html"
+  },
+  {
+    "id": "malayan-tiger",
+    "name": "Malayan tiger",
+    "species": "Panthera tigris jacksoni",
+    "exhibit": "Malayan Tiger Exhibit, Singapore Zoo",
+    "distinguishingTraits": [
+      "Orange coat with bold black stripes and white areas around the face and underside",
+      "A long striped tail used for balance",
+      "A muscular body with a stripe pattern unique to each individual"
+    ],
+    "typicalBehaviour": [
+      "Usually solitary outside of mothers caring for cubs",
+      "May patrol, scent-mark, rest in shade or enter water",
+      "Is most active around cooler parts of the day"
+    ],
+    "conservationStatus": "Critically Endangered",
+    "safeVisitorFacts": [
+      "A tiger's stripe pattern is unique, like a fingerprint.",
+      "Malayan tigers are native to Peninsular Malaysia.",
+      "Remain behind visitor barriers and never imitate prey sounds or attempt to attract an animal."
+    ],
+    "source": "https://www.mandai.com/en/singapore-zoo/animals-and-zones.html"
+  },
+  {
+    "id": "orangutan",
+    "name": "Orangutan",
+    "species": "Pongo species",
+    "exhibit": "Orangutan habitat, Singapore Zoo",
+    "distinguishingTraits": [
+      "Long reddish-brown hair",
+      "Very long arms adapted for moving through trees",
+      "Grasping hands and feet"
+    ],
+    "typicalBehaviour": [
+      "Climbs, swings and moves carefully through the canopy",
+      "Builds leafy nests for resting",
+      "Forages for fruit, leaves and other plant foods"
+    ],
+    "conservationStatus": "Critically Endangered",
+    "safeVisitorFacts": [
+      "The name orangutan comes from Malay words meaning person of the forest.",
+      "Orangutans spend much of their time above the ground.",
+      "Keep food secured and never feed wildlife unless a supervised programme explicitly allows it."
+    ],
+    "source": "https://www.mandai.com/en/singapore-zoo.html"
+  },
+  {
+    "id": "penguin",
+    "name": "African penguin",
+    "species": "Spheniscus demersus",
+    "exhibit": "Penguin exhibit, Singapore Zoo",
+    "distinguishingTraits": [
+      "Black back and white belly with a black chest band",
+      "Pink skin patches above the eyes",
+      "A compact body with flipper-like wings"
+    ],
+    "typicalBehaviour": [
+      "Swims using its flippers for propulsion",
+      "Rests, preens and socialises in groups on land",
+      "Uses calls to recognise its partner and chicks"
+    ],
+    "conservationStatus": "Critically Endangered",
+    "safeVisitorFacts": [
+      "African penguins live on the coasts of southern Africa, not in Antarctica.",
+      "Their pink eye patches help release body heat.",
+      "Do not tap viewing glass or use flash where signs prohibit it."
+    ],
+    "source": "https://www.mandai.com/en/singapore-zoo/animals-and-zones.html"
+  },
+  {
+    "id": "giraffe",
+    "name": "Giraffe",
+    "species": "Giraffa camelopardalis",
+    "exhibit": "Wild Africa, Singapore Zoo",
+    "distinguishingTraits": [
+      "An extremely long neck and long legs",
+      "A tan coat covered in irregular brown patches",
+      "Two horn-like ossicones on top of the head"
+    ],
+    "typicalBehaviour": [
+      "Browses leaves high in trees using a long tongue",
+      "Walks slowly across open habitat and may gather in loose groups",
+      "Often rests while standing"
+    ],
+    "conservationStatus": "Vulnerable",
+    "safeVisitorFacts": [
+      "A giraffe's patch pattern is unique to the individual.",
+      "Its long, dark tongue helps grasp leaves.",
+      "Use only food supplied during an authorised feeding session and follow keeper instructions."
+    ],
+    "source": "https://www.mandai.com/en/singapore-zoo/animals-and-zones.html"
+  }
+]
+
