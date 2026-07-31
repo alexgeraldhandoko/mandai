@@ -135,3 +135,217 @@ Exit → Receive "My Safari Report" (animals seen, badges, conservation pledge)
 - [ ] Create sample AR animation for RFID tap point
 - [ ] User test with families
 
+---
+
+## Implemented MVP: WildSight
+
+WildSight is a voice-first Expo application for blind and low-vision visitors at Mandai Wildlife Reserve. A visitor points the rear camera at an animal, holds one large button while asking a question, releases it, and hears a concise description.
+
+This repository contains two independently runnable TypeScript applications:
+
+- `mobile/` — React Native, Expo SDK 57 and Expo Router
+- `server/` — Node.js, Express, Amazon Bedrock and an OpenAI fallback
+- `data/mandaiAnimals.json` — the canonical example set of approved animal facts
+
+The highest-priority workflow is implemented end to end:
+
+```text
+hold button → record question → release → take one photo
+            → upload both to server → transcribe → analyse with image + Mandai facts
+            → return concise text → display and speak it
+```
+
+Follow-up questions send a new audio recording with the prior session ID. The server keeps the previous image and the latest conversation turns in memory for 30 minutes, so it does not need a second photograph.
+
+## What works
+
+- Welcome screen with explicit camera and microphone permission controls
+- Rear-camera preview and one-photo capture
+- Press-and-hold audio recording with Expo Audio
+- Haptic start/stop feedback and spoken status cues
+- Multipart upload to the Express API
+- OpenAI speech transcription
+- Amazon Bedrock image reasoning through the Converse API
+- OpenAI vision as a configurable fallback
+- Mandai-specific grounding for five example animals
+- Automatic text-to-speech, replay, follow-up and retry
+- Response length, speech speed and English/Indonesian settings
+- System-selected Bluetooth or wired audio routing
+- Honest, no-credentials demo mode with five bundled sample images
+- Request validation, upload limits, timeouts and accessible error states
+- Unit and API-boundary tests
+
+## Important demo-mode limitation
+
+The bundled demo is intentionally honest. With no cloud credentials, it cannot transcribe arbitrary speech. The visitor selects one of three accessible sample questions, then uses the same press-and-hold interaction. The answer is generated from the selected bundled image’s approved local facts, and the UI explicitly says that no AI identification was claimed.
+
+This is not a hard-coded fake server success. The real camera/audio API returns a clear configuration error when its providers are unavailable.
+
+## Prerequisites
+
+- Node.js `20.19.4+` or `22.13.0+`
+- npm
+- Expo Go or an iOS/Android development build
+- A physical phone for the real camera workflow
+- AWS credentials with permission to call the chosen Bedrock model
+- An OpenAI API key for speech transcription
+
+The AWS SDK reads credentials from its normal server-side credential chain, such as `aws configure`, environment variables on the backend host, or an IAM role in AWS. Never add AWS credentials to `mobile/.env`.
+
+## 1. Start the backend
+
+Run these commands from the repository root:
+
+```bash
+cd server
+cp .env.example .env
+npm install
+npm run dev
+```
+
+Edit `server/.env` before starting:
+
+```dotenv
+PORT=4000
+AI_PROVIDER=bedrock
+TRANSCRIPTION_PROVIDER=openai
+AWS_REGION=us-east-1
+BEDROCK_MODEL_ID=amazon.nova-lite-v1:0
+OPENAI_API_KEY=your_server_only_key
+```
+
+`AI_PROVIDER=bedrock` uses Amazon Bedrock for the animal image. `TRANSCRIPTION_PROVIDER=openai` uses OpenAI only to turn the uploaded question into text. This separation exists because image reasoning and speech transcription are different responsibilities.
+
+To run the full fallback through OpenAI:
+
+```dotenv
+AI_PROVIDER=openai
+OPENAI_VISION_MODEL=gpt-4.1-mini
+OPENAI_TRANSCRIPTION_MODEL=gpt-4o-mini-transcribe
+```
+
+Verify the server:
+
+```bash
+curl http://localhost:4000/health
+```
+
+A configured server reports `"ready": true`. An unconfigured server reports the exact missing variable and does not pretend to analyse anything.
+
+## 2. Start the mobile app
+
+Find your computer’s local network address. On macOS, one common command is:
+
+```bash
+ipconfig getifaddr en0
+```
+
+Create `mobile/.env`:
+
+```dotenv
+EXPO_PUBLIC_API_URL=http://YOUR_COMPUTER_LAN_IP:4000
+```
+
+Then run:
+
+```bash
+cd mobile
+npm install
+npm start
+```
+
+Scan the QR code with Expo Go. The phone and computer must be able to reach each other on the same network. `localhost` on the phone means the phone itself, so it normally cannot be used for the backend URL.
+
+If `EXPO_PUBLIC_API_URL` is absent, choose **Try bundled demo** on the welcome screen.
+
+## Bluetooth and external audio
+
+WildSight deliberately does not implement Bluetooth pairing. Connect the JBL speaker, earphones, bone-conduction headphones, open-ear headphones or external microphone in the phone’s Bluetooth settings. Expo then uses the audio route selected by iOS or Android.
+
+For the hackathon, connect the JBL before opening the demo and confirm it is the selected output device. Real visitors would usually choose a private listening device.
+
+## Tests and verification
+
+Backend:
+
+```bash
+cd server
+npm run typecheck
+npm test
+npm run build
+```
+
+Mobile:
+
+```bash
+cd mobile
+npm run typecheck
+npx expo-doctor
+```
+
+Manual device checklist:
+
+1. Grant camera and microphone permissions.
+2. Confirm the rear-camera preview appears.
+3. Hold the ask button and speak for at least one second.
+4. Release and confirm haptic feedback plus “Taking picture” and “Analysing”.
+5. Confirm the text appears and is spoken automatically.
+6. Tap Replay.
+7. Tap Ask follow-up, ask about the same animal and confirm no second image is required.
+8. Connect and disconnect a Bluetooth speaker in system settings and confirm output follows the system route.
+9. Turn on VoiceOver or TalkBack and navigate every control.
+10. Stop the backend and confirm the app shows a recoverable error instead of a success response.
+
+## Architecture
+
+```text
+Expo mobile app
+  ├─ expo-camera: preview + one cached photograph
+  ├─ expo-audio: cached question recording
+  ├─ expo-speech: local spoken status and answer
+  └─ HTTPS multipart request (no cloud credentials)
+          │
+          ▼
+Express backend
+  ├─ validates type, size, settings and session
+  ├─ TranscriptionProvider → OpenAI transcription
+  ├─ VisionProvider → Bedrock Converse or OpenAI Responses
+  ├─ approved Mandai JSON grounding + strict safety prompt
+  ├─ 70-word formatting guard
+  └─ 30-minute in-memory follow-up session
+```
+
+The in-memory session store is appropriate for a hackathon but not for horizontally scaled production. A later version would use a short-lived encrypted object store for images and a shared TTL store such as Redis for conversation state, with explicit retention and deletion policies.
+
+## Security and privacy notes
+
+- The mobile bundle contains only `EXPO_PUBLIC_API_URL`; it contains no AI key or AWS credential.
+- The backend disables the Express technology header.
+- Uploads stay in memory and are limited to two files and 12 MB per file; images receive an additional 8 MB limit.
+- Responses do not include raw image or audio data.
+- The current server does not log media or transcripts.
+- Follow-up images and text expire from process memory after 30 minutes.
+- Production must use HTTPS, a narrow CORS origin, rate limiting, abuse monitoring and an explicit privacy/retention notice.
+- WildSight is a descriptive aid, not a mobility aid. It must not be used to detect roads, steps, edges, barriers or hazards.
+
+The data in this MVP is example grounding, not a final content-approval workflow. Mandai animal-care, conservation, accessibility and legal teams should review it before a real visitor deployment.
+
+## Dependency audit note
+
+`expo-doctor` passes all 18 SDK checks, and the backend audit is clean. As of this build, `npm audit --omit=dev` reports a moderate `uuid` advisory through Expo’s native `xcode` build-tool chain. npm offers only a forced breaking downgrade of Expo Splash Screen, so this repository does not apply that unsafe automated fix. Recheck after the next compatible Expo patch and upgrade through Expo’s supported version workflow.
+
+## Project map
+
+```text
+data/mandaiAnimals.json              canonical approved-facts example
+mobile/src/app/index.tsx             welcome and permissions
+mobile/src/app/camera.tsx            capture, record, process and follow-up state machine
+mobile/src/app/settings.tsx          accessibility preferences
+mobile/src/services/api.ts           multipart backend client
+mobile/src/data/demo-animals.ts      honest bundled-demo descriptions
+server/src/app.ts                    HTTP routes and validation
+server/src/providers/                Bedrock/OpenAI provider implementations
+server/src/prompt.ts                 grounding and safety rules
+server/src/formatResponse.ts         spoken-response cleanup and word cap
+server/API.md                        request and response contract
+```
