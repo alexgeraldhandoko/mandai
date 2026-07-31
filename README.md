@@ -11,6 +11,7 @@ How might you use KIRO to create a personalised, AI-powered experience at a zoo 
 - visitors can tailor the complexity of their audio guide based on their age.
 - visitors can scan animals and have to follow a specific path to attain badges, similar to Pokemon Go.
 - visitors can scan images of the animals at the echibit so that they can view animations of the animal which encapsulate the information of the exhibits. (Image-Based AR / Marker-Based AR)
+- rfid watches that non-tech users can use to tag the rfid at different exhibits and accumulate enough 'points' to attain badges.
 
 ---
 
